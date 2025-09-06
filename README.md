@@ -28,7 +28,22 @@ The reinforcement learning workflow implemented here follows these main stages:
 - An RL environment (`RadicalEnv`) provides `reset()` and `step()` for training interactions.  
 - Files:  
   - `env.py` – environment logic  
-  - `models.py` – DQN and DeltaNet network definitions  
+  - `models.py` – DQN and DeltaNet network definitions
+ 
+  ## **Usage**
+
+Run training directly from the command line:
+ 
+  python codess/scripts/run_training.py \
+  --base_dir ./dataset \
+  --episodes 500 \
+  --lr 1e-4 \
+  --hidden_size 128 \
+  --num_hidden_layers 2 \
+  --gamma 0.99 \
+  --eps_decay 0.995 \
+  --device cpu
+
 
 ### **2. Model Training**
 - A Deep Q-Network (DQN) selects actions from state features.  
