@@ -57,7 +57,7 @@ Run training directly from the command line:
 - A Jupyter notebook provides a step-by-step demo.  
 - Users can visualize intermediate states, inspect candidates, and generate figures interactively.  
 - Files:  
-  - `demo_notebook.ipynb` in the **notebook/** folder  
+  - `RL_radical_optimization.ipynb` in the **notebook/** folder  
 
 ---
 
@@ -73,12 +73,6 @@ Clone the repository and install dependencies:
 
 This will load your training and validation data from **data/**, train an RL agent with the given hyperparameters, and save trained models and logs inside **codes/** (or paths you define in the script).  
 
-For an interactive demo instead of CLI, launch:
-
-    jupyter lab
-    # then open notebook/RL_radical_optimization.ipynb
-
----
 
 ## **License**
 
