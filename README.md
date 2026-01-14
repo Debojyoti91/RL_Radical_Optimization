@@ -1,12 +1,24 @@
-# rl-cdft (research codebase)
+# **Reinforcement Learning Framework for Radical Optimization**
 
-Research utilities for reinforcement learning on Conceptual DFT (CDFT) descriptors
-and motif enrichment analysis for radical datasets.
+This repository provides a complete implementation of a reinforcement learning (RL) framework for ranking and optimizing radical candidates. The pipeline is designed to train lightweight neural agents that guide radical selection under descriptor constraints.  
+
+The repository includes both modular **Python codes** and interactive **Jupyter notebooks** for reproducibility, benchmarking, and downstream analysis.
+
+---
+
+## **Repository Structure**
 
 This repo is structured as a **script-first research codebase** (Option A):
 - reusable code under `src/rlcdft/`
-- runnable entry points under `scripts/`
+- runnable entry points under `scripts/`  
+- **notebook/** → Contains Jupyter notebooks for interactive experimentation and visualization.  
 
+Additional folder:
+
+- **data/** → Input CSV files (training, validation, benchmark).
+- - **Radicals/** → Contains all the radical chemical structures. 
+
+---
 ## Install
 
 Create an environment and install dependencies:
@@ -64,6 +76,31 @@ python scripts/motif_enrichment.py \
   --top-csv path/to/top20.csv \
   --out-csv outputs/motif_enrichment.csv
 ```
+
+---
+
+This will load your training and validation data from **data/**. 
+
+
+## **License**
+
+This project is released under the MIT License. See LICENSE for details.
+
+---
+
+## **Citation**
+
+If you use this repository, please cite:
+
+
+
+
+
+This repo is structured as a **script-first research codebase** (Option A):
+- reusable code under `src/rlcdft/`
+- runnable entry points under `scripts/`
+
+
 
 ## Notes
 
