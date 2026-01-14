@@ -1,88 +1,73 @@
-# **Reinforcement Learning Framework for Radical Optimization**
+# rl-cdft (research codebase)
 
-This repository provides a complete implementation of a reinforcement learning (RL) framework for ranking and optimizing radical candidates. The pipeline is designed to train lightweight neural agents that guide radical selection under descriptor constraints.  
+Research utilities for reinforcement learning on Conceptual DFT (CDFT) descriptors
+and motif enrichment analysis for radical datasets.
 
-The repository includes both modular **Python codes** and interactive **Jupyter notebooks** for reproducibility, benchmarking, and downstream analysis.
+This repo is structured as a **script-first research codebase** (Option A):
+- reusable code under `src/rlcdft/`
+- runnable entry points under `scripts/`
 
----
+## Install
 
-## **Repository Structure**
+Create an environment and install dependencies:
 
-The project is organized into two main folders:
+```bash
+pip install -r requirements.txt
+```
 
-- **codes/** → Contains all Python modules and training scripts.  
-- **notebook/** → Contains Jupyter notebooks for interactive experimentation and visualization.  
+For local development (so `import rlcdft` works):
 
-Additional folder:
+```bash
+pip install -e .
+```
 
-- **data/** → Input CSV files (training, validation, benchmark).  
+## TD3 training (ω tuning)
 
----
+Input: a CSV containing the descriptor columns (default set below), including the ω column
+(default: `Electrophilicity`).
 
-## **Methodology**
+Run:
 
-The reinforcement learning workflow implemented here follows these main stages:
-
-### **1. Environment Setup**
-- Candidate radicals are represented by tabular features.  
-- An RL environment (`RadicalEnv`) provides `reset()` and `step()` for training interactions.  
-- Files:  
-  - `env.py` – environment logic  
-  - `models.py` – DQN and DeltaNet network definitions
- 
-  ## **Usage**
-
-Run training directly from the command line:
- 
-  python codess/scripts/run_training.py \
-  --base_dir ./dataset \
+```bash
+python scripts/train_td3.py \
+  --data path/to/dataset.csv \
+  --outdir outputs/td3_run1 \
+  --target-omega 1.0 \
+  --success-thr 0.05 \
   --episodes 500 \
-  --lr 1e-4 \
-  --hidden_size 128 \
-  --num_hidden_layers 2 \
-  --gamma 0.99 \
-  --eps_decay 0.995 \
-  --device cpu
+  --steps 50
+```
 
+Outputs:
+- `actor_td3.pth`, `critic_td3.pth`
+- `history.json`
+- `train_curves.rewards.png`, `train_curves.success.png`
+- `episode_trace.png`
+- `run_config.json`
 
-### **2. Model Training**
-- A Deep Q-Network (DQN) selects actions from state features.  
-- A DeltaNet predicts small adjustments to descriptors.  
-- Training uses epsilon-greedy exploration with standard RL updates.  
-- Files:  
-  - `train.py` – training loops and grid search  
-  - `run_training.py` – command-line entry point with argparse  
+### Default state columns
 
-### **3. Interactive Exploration**
-- A Jupyter notebook provides a step-by-step demo.  
-- Users can visualize intermediate states, inspect candidates, and generate figures interactively.  
-- Files:  
-  - `RL_radical_optimization.ipynb` in the **notebook/** folder  
+```text
+Electronegativity, Hardness, Electrophilicity, q(N),
+f-, f+, f0, s-, s+, s0, s+/s-, s-/s+, s(2)
+```
 
----
+You can override them with `--state-cols` and `--omega-col`.
 
-## **Installation**
+## Motif enrichment
 
-Clone the repository and install dependencies:
+Compute enrichment of motif classes between a full motif table (Excel) and a top subset (CSV):
 
-    git clone https://github.com/Debojyoti91/RL_Radical_Optimization.git
-    cd RL_Radical_Optimization
-    pip install -r requirements.txt
+```bash
+python scripts/motif_enrichment.py \
+  --motif-xlsx path/to/Radical_Name_List.xlsx \
+  --top-csv path/to/top20.csv \
+  --out-csv outputs/motif_enrichment.csv
+```
 
----
+## Notes
 
-This will load your training and validation data from **data/**, train an RL agent with the given hyperparameters, and save trained models and logs inside **codes/** (or paths you define in the script).  
-
-
-## **License**
-
-This project is released under the MIT License. See LICENSE for details.
-
----
-
-## **Citation**
-
-If you use this repository, please cite:
-
-
-
+- This codebase intentionally avoids hard-coded paths (Colab/Drive) and runs from CLI.
+- The TD3 environment included here applies a **scalar action** that edits ω only.
+  If you later want a multi-action environment that edits additional descriptors,
+  you can extend `ContinuousRadicalEnv` in `src/rlcdft/envs.py`.
