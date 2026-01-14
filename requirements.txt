@@ -1,6 +1,5 @@
-torch>=1.12
-numpy>=1.23
-pandas>=1.5
-matplotlib>=3.6
-jupyterlab
-
+numpy
+pandas
+torch
+matplotlib
+openpyxl
