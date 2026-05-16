@@ -15,8 +15,8 @@ This repo is structured as a **script-first research codebase** (Option A):
 
 Additional folder:
 
-- **data/** → Input CSV files (training, validation, benchmark).
-- - **Radicals/** → Contains all the radical chemical structures. 
+- **data/** → Input CSV and exel sheet files (training, validation, benchmark, external validation).
+- - **Radicals/** → Contains all the radical chemical structures (training, validation, benchmark, external validation). 
 
 ---
 ## Install
